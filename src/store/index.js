@@ -17,8 +17,8 @@ export default createStore({
   // },
   plugins: [
     createPersistedState({
-      key: "vue-gauth",
-      paths: ["userInfo"],
+      key: "taskmanagement",
+      paths: ["auth"],
       storage: window.sessionStorage,
     }),
   ],

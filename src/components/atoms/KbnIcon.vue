@@ -1,6 +1,6 @@
 <template>
   <span :class="classes">
-    {{ icon }}
+    <!-- {{ icon }} -->
   </span>
 </template>
 

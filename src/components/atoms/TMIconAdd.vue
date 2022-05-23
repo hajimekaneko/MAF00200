@@ -1,6 +1,7 @@
 <template>
   <button class="tm-button" type="button" @click="handleClick">
-    <fa-icon icon="circle-plus" size="lg"></fa-icon>
+    <fa-icon icon="circle-plus" size="lg"> </fa-icon>
+    <!-- <fa-icon :icon="['fa', 'redo']" /> -->
     <slot />
   </button>
 </template>
