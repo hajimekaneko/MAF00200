@@ -1,0 +1,25 @@
+npm install --save bootstrap-vue
+npm install --save @fortawesome/vue-fontawesome
+npm install --save @fortawesome/fontawesome-svg-core
+npm install --save @fortawesome/free-solid-svg-icons
+npm install --save @fortawesome/free-brands-svg-icons
+npm install --save @fortawesome/free-regular-svg-icons
+npm install --save firebase
+npm install autoprefixer@10.4.5 --save-exact
+npm install --save vuex-persistedstate
+npm install --save vue-router 
+npm install --save vuex
+npm install --save axios
+
+~~~~~~~~~~~~~~~~~~~~~~
+npm install --save lodash
+npm install --save stylus
+npm install --save stylus-loader
+
+
+~~~~~~~~~~~~~~~~~~~~~~
+npm install --save vue3-google-oauth2
+~~~~~~~~~~~~~~~~~~=~~~
+
+
+npm install --save @vue/composition-api
