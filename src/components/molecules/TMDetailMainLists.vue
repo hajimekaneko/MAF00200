@@ -84,4 +84,15 @@ button {
 .task-description {
   border: thin solid black;
 }
+ul {
+  display: flex;
+  /* min-height: 5vh; */
+  list-style-type: none;
+  margin: 16px;
+  padding: 0;
+}
+ul li {
+  width: 192px;
+  /* margin-right: 8px; */
+}
 </style>

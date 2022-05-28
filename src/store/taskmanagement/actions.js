@@ -47,7 +47,17 @@ export default {
   //     commit("LOGINSTATUSCHANGE", user.uid ? true : false);
   //   });
   // },
-
+  setsigninstate: ({ commit }, { user, idToken }) => {
+    console.log(user);
+    return Auth.setsigninstate(idToken)
+      .then(() => {
+        // userじゃなくてバックエンドから持ってきたresponce.dataを使った方がええと思う
+        commit(types.SETSIGNINSTATE, user);
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
   addTask: ({ commit, state }, { TaskGroupId, Task }) => {
     console.log(TaskGroupId);
     console.log(Task);

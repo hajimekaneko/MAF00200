@@ -2,6 +2,7 @@
 node_modules
 /dist
 
+/src/key
 
 # local env files
 .env.local

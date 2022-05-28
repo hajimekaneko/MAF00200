@@ -1,11 +1,7 @@
 <template>
   <div class="d-flex justify-content-between">
     <ul class="row mx-0 my-2">
-      <li
-        class="col-12 my-1"
-        v-for="(task, Task_index) in TaskGroup.Task"
-        :key="task.TaskId"
-      >
+      <li class="col-12 my-1" v-for="task in TaskGroup.Task" :key="task.TaskId">
         <div class="row">
           <div class="col task-name">
             {{ task.Task_name }}
@@ -18,9 +14,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col">
-            {{ Task_index }}
-          </div>
+          <div class="col"></div>
         </div>
 
         <TMDetailMainLists :lists="task.List" />
@@ -111,5 +105,16 @@ button {
 .task-name,
 .task-description {
   border: thin solid black;
+}
+ul {
+  display: flex;
+  /* min-height: 5vh; */
+  list-style-type: none;
+  margin: 16px;
+  padding: 0;
+}
+ul li {
+  width: 192px;
+  /* margin-right: 8px; */
 }
 </style>

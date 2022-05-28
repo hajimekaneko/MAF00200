@@ -17,6 +17,7 @@ import { useRouter } from "vue-router";
 import { initializeApp, getApps } from "firebase/app";
 // import firebase from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { firebaseConfig } from "@/key/firebaseconfig.js";
 
 export default {
   name: "TaskManagement",
@@ -30,15 +31,6 @@ export default {
     const store = useStore();
     const router = useRouter();
     const authMethod = () => {
-      const firebaseConfig = {
-        apiKey: "AIzaSyCD8kRLrcxGkQO9jri9_INSBD0C2Nvngiw",
-        authDomain: "mas00100.firebaseapp.com",
-        projectId: "mas00100",
-        storageBucket: "mas00100.appspot.com",
-        messagingSenderId: "580818454655",
-        appId: "1:580818454655:web:adf753882179128c77d74a",
-        measurementId: "G-EQEG4J42VH",
-      };
       if (!getApps().length) {
         initializeApp(firebaseConfig);
       }
@@ -47,11 +39,17 @@ export default {
       const auth = getAuth();
       signInWithPopup(auth, provider)
         .then((result) => {
-          const user = result.user;
-          data.email_address = user.email;
-          store.commit("SETSIGNINSTATE", result.user);
-          console.log(store.state.auth);
-          router.push("/taskmanagement/");
+          auth.currentUser
+            .getIdToken(/* forceRefresh */ true)
+            .then(function (idToken) {
+              console.log(idToken);
+              const user = result.user;
+              data.email_address = user.email;
+              // userじゃなくてバックエンドから持ってきた値を使った方がええと思う
+              store.dispatch("setsigninstate", { user, idToken }).then(() => {
+                router.push("/taskmanagement/");
+              });
+            });
         })
         .catch((error) => {
           const errorCode = error.code;

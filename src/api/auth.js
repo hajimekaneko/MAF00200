@@ -1,6 +1,20 @@
 import client from "./client";
 
 export default {
+  setsigninstate: (idToken) => {
+    return new Promise((resolve, reject) => {
+      console.log(idToken);
+      client
+        .post("/main/login/", idToken)
+        .then((response) =>
+          resolve({ email: response.data.email, userId: response.data.userId })
+        )
+        .then((response) => console.log(response))
+        .catch((err) => {
+          reject(new Error(err.response.data.message || err.message));
+        });
+    });
+  },
   login: (authInfo) => {
     return new Promise((resolve, reject) => {
       console.log(authInfo);
