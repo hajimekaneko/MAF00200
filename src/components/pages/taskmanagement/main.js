@@ -18,19 +18,6 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 // ...
 library.add(fas, far, fab);
 
-// import { initializeApp } from "firebase/app";
-
-// // Initialize Firebase
-// var config = {
-//   apiKey: "AIzaSyD32vSszxnkAO57Tm2i9rf-cVMf8XKYSis",
-//   authDomain: "my-project-95530.firebaseapp.com",
-//   databaseURL: "https://my-project-95530.firebaseapp.com",
-//   projectId: "my-project-95530",
-//   storageBucket: "my-project-95530.appspot.com",
-//   messagingSenderId: "800278616293",
-// };
-// initializeApp(config);
-
 createApp(TaskManagement)
   .use(store)
   .use(router)
