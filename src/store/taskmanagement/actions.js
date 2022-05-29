@@ -58,14 +58,30 @@ export default {
         throw err;
       });
   },
-  addTask: ({ commit, state }, { TaskGroupId, Task }) => {
-    console.log(TaskGroupId);
-    console.log(Task);
-    console.log(commit);
-    console.log(state);
+
+  addtaskgroup: ({ dispatch, state }) => {
+    console.log(state.auth.uid);
+    return TaskGroup.addtaskgroup(state.auth.uid, state.auth.uid)
+      .then(() => {
+        dispatch("fetchLists");
+      })
+      .catch((err) => {
+        throw err;
+      });
   },
-  addtaskgroup: ({ dispatch, state }, UserId) => {
-    return TaskGroup.addtaskgroup(state.auth.uid, UserId)
+
+  addtask: ({ dispatch, state }, TaskGroupId) => {
+    return Task.addTask(state.auth.uid, TaskGroupId)
+      .then(() => {
+        dispatch("fetchLists");
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
+  addlist: ({ dispatch, state }, TaskId) => {
+    return List.addlist(state.auth.uid, TaskId)
       .then(() => {
         dispatch("fetchLists");
       })
@@ -133,16 +149,6 @@ export default {
       });
   },
 
-  addlist: ({ dispatch, state }, TaskId) => {
-    return List.addlist(state.auth.uid, TaskId)
-      .then(() => {
-        dispatch("fetchLists");
-      })
-      .catch((err) => {
-        throw err;
-      });
-  },
-
   editlistname: ({ commit }, { TaskGroup_index, Task_index, List_index }) => {
     commit(types.EDITLISTNAME, { TaskGroup_index, Task_index, List_index });
   },
@@ -200,7 +206,7 @@ export default {
   // },
 
   fetchLists: ({ commit, state }) => {
-    return List.fetch(state.auth.uid)
+    return TaskGroup.fetch(state.auth.uid, state.auth.uid)
       .then((response) => {
         // Group及びTaskに表示、非表示をコントロールするshowを追加
         if (response.lists != null) {

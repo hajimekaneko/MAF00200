@@ -8,6 +8,7 @@
       <TMMainView
         :task_groups="task_groups"
         @taskgroup_addTask="taskgroup_addTask($event)"
+        @taskgroup_openDetail="taskgroup_openDetail($event)"
       />
       <TMIconAdd @addContent="addTaskGroup()" />
 
@@ -65,22 +66,27 @@ export default {
       this.progress = true;
       this.message = message;
     },
-    taskgroup_addTask(TaskGroup_index) {
+    taskgroup_addTask(event) {
+      let TaskGroupId;
+      TaskGroupId =
+        this.$store.state.board.lists[event.TaskGroup_index].TaskGroupId;
+      this.$store.dispatch("addtask", TaskGroupId);
+    },
+    taskgroup_openDetail(TaskGroup_index) {
       this.addContent = !this.addContent;
       this.TaskGroup_index = TaskGroup_index;
       console.log(TaskGroup_index);
     },
-
     resetProgress() {
       this.progress = false;
       this.message = "";
     },
     addTaskGroup() {
-      let UserId;
-      // let list = new Array()
-      UserId = this.$store.state.board.lists[0].User;
-      console.log(UserId);
-      this.$store.dispatch("addtaskgroup", UserId);
+      // let UserId;
+      // // let list = new Array()
+      // UserId = this.$store.state.board.lists[0].User;
+      // console.log(UserId);
+      this.$store.dispatch("addtaskgroup");
     },
 
     loadLists() {

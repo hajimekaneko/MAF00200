@@ -69,7 +69,7 @@ export default {
       this.$emit("addContent");
     },
     openDetail() {
-      // this.$emit('addContent')
+      this.$emit("openDetail");
     },
     edit_content_name() {
       this.$emit("edit_content_name");

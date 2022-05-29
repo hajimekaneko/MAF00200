@@ -120,10 +120,6 @@ export default {
       // let list = new Array()
       TaskId =
         this.$store.state.board.lists[TaskGroup_index].Task[Task_index].TaskId;
-
-      // for (let i = 0; i < this.$store.state.board.lists[TaskGroup_index].Task[Task_index].List.length; i++){
-      //   list.push(this.$store.state.board.lists[TaskGroup_index].Task[Task_index].List[i])
-      // }
       this.$store.dispatch("addlist", TaskId);
     },
     edit_list_name(TaskGroup_index, Task_index, List_index) {

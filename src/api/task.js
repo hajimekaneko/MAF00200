@@ -4,7 +4,6 @@ export default {
   addlist: (token, TaskId, content) => {
     return new Promise((resolve, reject) => {
       console.log({ TaskId, content });
-
       client
         .patch(
           `/taskmanagement/tasks/${TaskId}/`,
@@ -20,6 +19,20 @@ export default {
         .catch((err) => {
           console.log("err");
           reject(new Error(err.response || err.message));
+        });
+    });
+  },
+  addTask: (token, TaskGroupId) => {
+    return new Promise((resolve, reject) => {
+      client
+        .post(
+          "/taskmanagement/tasks/",
+          { TaskGroup: TaskGroupId, Task_name: "newTask", Task_status: 0 },
+          { headers: { "x-kbn-token": token } }
+        )
+        .then((response) => resolve({ tasks: response.data }))
+        .catch((err) => {
+          reject(new Error(err.response.data.message || err.message));
         });
     });
   },

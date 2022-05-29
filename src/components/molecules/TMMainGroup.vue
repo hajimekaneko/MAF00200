@@ -7,6 +7,7 @@
         :content_status="TaskGroup_status"
         @decompress="taskgroup_decompress"
         @addContent="taskgroup_addTask"
+        @openDetail="taskgroup_openDetail"
         @edit_content_name="edit_taskgroup_name(TaskGroup_index)"
         @changeStatus="changeTaskGroupStatus($event)"
       />
@@ -84,6 +85,9 @@ export default {
     },
     taskgroup_addTask() {
       this.$emit("taskgroup_addTask");
+    },
+    taskgroup_openDetail() {
+      this.$emit("taskgroup_openDetail");
     },
     edit_taskgroup_name(TaskGroup_index) {
       console.log("edit_content_name");

@@ -17,6 +17,7 @@
               task_group.TaskGroup_edit_taskgroupname_flg
             "
             @taskgroup_decompress="taskgroup_decompress(TaskGroup_index)"
+            @taskgroup_openDetail="taskgroup_openDetail(TaskGroup_index)"
             @taskgroup_addTask="taskgroup_addTask(TaskGroup_index)"
             @changeTaskGroupStatus="
               changeTaskGroupStatus(
@@ -62,7 +63,10 @@ export default {
       this.$store.dispatch("showtasks", TaskGroup_index);
     },
     taskgroup_addTask(TaskGroup_index) {
-      this.$emit("taskgroup_addTask", TaskGroup_index);
+      this.$emit("taskgroup_addTask", { TaskGroup_index });
+    },
+    taskgroup_openDetail(TaskGroup_index) {
+      this.$emit("taskgroup_openDetail", TaskGroup_index);
     },
     changeTaskGroupStatus(event, TaskGroupId, TaskGroup_Status) {
       console.log(event, TaskGroupId, TaskGroup_Status);

@@ -1,18 +1,41 @@
 import client from "./client";
 
 export default {
+  fetch: (token, UserId) => {
+    return new Promise((resolve, reject) => {
+      client
+        .get(
+          "/taskmanagement/fetch_lists",
+          {
+            params: {
+              // ここにクエリパラメータを指定する
+              UserId: UserId,
+            },
+          },
+          {
+            headers: { "x-kbn-token": token },
+          }
+        )
+        .then((response) => resolve({ lists: response.data }))
+        .catch((err) => {
+          reject(new Error(err.response.data.message || err.message));
+        });
+    });
+  },
   addtaskgroup: (token, UserId) => {
     return new Promise((resolve, reject) => {
+      console.log(UserId);
       client
         .post(
           "/taskmanagement/task_groups/",
-          { User: UserId, TaskGroup_name: "newTaskGroup", TaskGroup_status: 0 },
+          {
+            User: UserId,
+            TaskGroup_name: "newTaskGroup",
+            TaskGroup_status_No: 0,
+          },
           { headers: { "x-kbn-token": token } }
         )
-        .then(
-          // response => resolve({ lists: response.data}),
-          (response) => console.log(response.data)
-        )
+        .then((response) => resolve(response.data))
         .catch((err) => {
           reject(new Error(err.response.data.message || err.message));
         });
