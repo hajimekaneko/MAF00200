@@ -5,7 +5,8 @@
         :name="Task_name"
         :edit_content_flg="Task_edit_taskname_flg"
         :content_status="Task_status"
-        @decompress="task_decompress"
+        @deleteContent="deleteTask"
+        @decompress="task_decompress(TaskGroup_index, Task_index)"
         @addContent="addContent(TaskGroup_index, Task_index)"
         @edit_content_name="edit_task_name(TaskGroup_index, Task_index)"
         @changeStatus="changeTaskStatus($event)"
@@ -32,7 +33,7 @@
             @edited_list_name="
               edited_list_name($event, TaskGroup_index, Task_index, index, list)
             "
-            @deleteContent="deleteContent(TaskGroup_index, Task_index, index)"
+            @deleteContent="deleteList(TaskGroup_index, Task_index, index)"
           />
         </li>
       </ul>
@@ -193,13 +194,21 @@ export default {
     changeTaskStatus(event) {
       this.$emit("changeTaskStatus", event);
     },
-    deleteContent(TaskGroup_index, Task_index, List_index) {
+    deleteList(TaskGroup_index, Task_index, List_index) {
+      console.log(TaskGroup_index, Task_index, List_index);
       var listID;
       listID =
         this.$store.state.board.lists[TaskGroup_index].Task[Task_index].List[
           List_index
         ].ListId;
       this.$store.dispatch("deletelist", listID);
+    },
+    deleteTask(TaskGroup_index, Task_index) {
+      console.log(TaskGroup_index, Task_index);
+      var TaskID;
+      TaskID =
+        this.$store.state.board.lists[TaskGroup_index].Task[Task_index].TaskId;
+      this.$store.dispatch("deletetask", TaskID);
     },
   },
 };

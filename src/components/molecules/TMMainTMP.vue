@@ -15,6 +15,7 @@
       </template>
       <template v-slot:end>
         <div class="btns">
+          <TMIconDelete @deleteContent="deleteContent" />
           <TMIconDetail @openDetail="openDetail" />
           <TMIconAdd @addContent="addContent" />
           <TMIconBar @decompress="decompress" />
@@ -30,6 +31,7 @@
 import TMIconStatus from "@/components/atoms/TMIconStatus.vue";
 import TMIconBar from "@/components/atoms/TMIconBar.vue";
 import TMIconAdd from "@/components/atoms/TMIconAdd.vue";
+import TMIconDelete from "@/components/atoms/TMIconDelete.vue";
 import TMIconDetail from "@/components/atoms/TMIconDetail.vue";
 import CMToInputFiled from "@/components/molecules/CMToInputFiled.vue";
 
@@ -43,6 +45,7 @@ export default {
     TMIconAdd,
     TMIconBar,
     TMIconDetail,
+    TMIconDelete,
     CMToInputFiled,
   },
 
@@ -70,6 +73,9 @@ export default {
     },
     openDetail() {
       this.$emit("openDetail");
+    },
+    deleteContent() {
+      this.$emit("deleteContent");
     },
     edit_content_name() {
       this.$emit("edit_content_name");

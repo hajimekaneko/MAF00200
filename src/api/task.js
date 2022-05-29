@@ -51,6 +51,20 @@ export default {
         });
     });
   },
+  deletetask: (token, TaskID) => {
+    return new Promise((resolve, reject) => {
+      console.log(TaskID);
+      client
+        .delete(`/taskmanagement/tasks/${TaskID}/`, {
+          headers: { "x-kbn-token": token },
+        })
+        .then((response) => resolve({ tasks: response.data }))
+        .catch((err) => {
+          reject(new Error(err.response.data.message || err.message));
+        });
+    });
+  },
+
   add: (token, { name, description, list }) => {
     return new Promise((resolve, reject) => {
       client

@@ -193,6 +193,15 @@ export default {
         throw err;
       });
   },
+  deletetask: ({ dispatch, state }, TaskID) => {
+    return Task.deletetask(state.auth.uid, TaskID)
+      .then(() => {
+        dispatch("fetchLists");
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
 
   // login: ({ commit }, authInfo) => {
   //   return Auth.login(authInfo)
