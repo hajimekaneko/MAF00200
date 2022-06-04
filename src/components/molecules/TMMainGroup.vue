@@ -5,6 +5,7 @@
         :name="TaskGroup_name"
         :edit_content_flg="TaskGroup_edit_taskgroupname_flg"
         :content_status="TaskGroup_status"
+        @deleteContent="openDeleteModal"
         @decompress="taskgroup_decompress"
         @addContent="taskgroup_addTask"
         @openDetail="taskgroup_openDetail"
@@ -34,12 +35,20 @@
         </li>
       </ul>
     </div>
+    <TMModalWindowsDelete
+      :Content_name="TaskGroup_name"
+      v-show="showDeleteModal"
+      @closeDeleteModal="closeDeleteModal"
+      @deleteContent="deleteTaskGrouop(TaskGroup_index)"
+    >
+    </TMModalWindowsDelete>
   </div>
 </template>
 
 <script>
 import TMMainTMP from "@/components/molecules/TMMainTMP.vue";
 import TMMainTask from "@/components/molecules/TMMainTask.vue";
+import TMModalWindowsDelete from "@/components/organisms/TMModalWindowsDelete.vue";
 
 export default {
   name: "TMMainGroup",
@@ -47,6 +56,12 @@ export default {
   components: {
     TMMainTMP,
     TMMainTask,
+    TMModalWindowsDelete,
+  },
+  data() {
+    return {
+      showDeleteModal: false,
+    };
   },
 
   props: {
@@ -100,6 +115,19 @@ export default {
     },
     changeTaskGroupStatus(event) {
       this.$emit("changeTaskGroupStatus", event);
+    },
+    closeDeleteModal: function () {
+      this.showDeleteModal = false;
+    },
+    openDeleteModal() {
+      // confirm('削除してよろしいですか?')
+      this.showDeleteModal = true;
+    },
+    deleteTaskGrouop(TaskGroup_index) {
+      console.log(TaskGroup_index);
+      var TaskGroupID;
+      TaskGroupID = this.$store.state.board.lists[TaskGroup_index].TaskGroupId;
+      this.$store.dispatch("deletetaskgroup", TaskGroupID);
     },
   },
 };

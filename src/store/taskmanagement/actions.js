@@ -202,7 +202,15 @@ export default {
         throw err;
       });
   },
-
+  deletetaskgroup: ({ dispatch, state }, TaskGroupID) => {
+    return TaskGroup.deletetaskgroup(state.auth.uid, TaskGroupID)
+      .then(() => {
+        dispatch("fetchLists");
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
   // login: ({ commit }, authInfo) => {
   //   return Auth.login(authInfo)
   //     .then(({ token, userId }) => {

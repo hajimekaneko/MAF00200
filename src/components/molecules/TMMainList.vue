@@ -14,7 +14,7 @@
         />
       </template>
       <template v-slot:end>
-        <TMIconDelete @deleteContent="openModal" />
+        <TMIconDelete @deleteContent="openDeleteModal" />
         <TMListDetail
           @changeStatus="changeStatus($event)"
           :List_name="List_name"
@@ -24,10 +24,10 @@
       </template>
     </CMToInputFiled>
     <TMModalWindowsDelete
-      :List_name="List_name"
-      v-show="showContent"
-      @closeModal="closeModal"
-      @deleteContent="deleteContent"
+      :Content_name="List_name"
+      v-show="showDeleteModal"
+      @closeDeleteModal="closeDeleteModal"
+      @deleteContent="deleteList(TaskGroup_index, Task_index, List_index)"
     >
     </TMModalWindowsDelete>
   </div>
@@ -63,7 +63,7 @@ export default {
       type: Number,
       required: true,
     },
-    List_Index: {
+    List_index: {
       type: Number,
       required: true,
     },
@@ -79,12 +79,20 @@ export default {
       type: String,
       required: false,
     },
+    TaskGroup_index: {
+      type: Number,
+      required: true,
+    },
+    Task_index: {
+      type: Number,
+      required: true,
+    },
   },
 
   data() {
     return {
       shown: false,
-      showContent: false,
+      showDeleteModal: false,
     };
   },
 
@@ -100,15 +108,21 @@ export default {
     edited_list_name(newlistname) {
       this.$emit("edited_list_name", newlistname);
     },
-    closeModal: function () {
-      this.showContent = false;
+    closeDeleteModal: function () {
+      this.showDeleteModal = false;
     },
-    openModal() {
+    openDeleteModal() {
       // confirm('削除してよろしいですか?')
-      this.showContent = true;
+      this.showDeleteModal = true;
     },
-    deleteContent() {
-      this.$emit("deleteContent");
+    deleteList(TaskGroup_index, Task_index, List_index) {
+      console.log(TaskGroup_index, Task_index, List_index);
+      var listID;
+      listID =
+        this.$store.state.board.lists[TaskGroup_index].Task[Task_index].List[
+          List_index
+        ].ListId;
+      this.$store.dispatch("deletelist", listID);
     },
     // handleRemove ({ taskId, list }) {
     //   return this.$store.dispatch('removeTask', { taskId, list })

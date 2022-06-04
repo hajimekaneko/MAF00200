@@ -1,16 +1,16 @@
 <template>
-  <CMModalWindows @closeModal="closeModal">
+  <CMModalWindows @closeModal="closeDeleteModal">
     <!-- 下記を参考に作り直す -->
     <!-- https://zukucode.com/2020/04/vue-alert-confirm.html -->
     <template v-slot:header>
       <div class="modal_header row">
         <div class="col d-flex justify-content-center">
-          {{ List_name }}を削除します。 <br />よろしいですか。
+          {{ Content_name }}を削除します。 <br />よろしいですか。
         </div>
       </div>
     </template>
     <div class="modal_main row d-flex justify-content-around">
-      <button @click="closeModal" type="button" class="btn btn-info">
+      <button @click="closeDeleteModal" type="button" class="btn btn-info">
         いいえ
       </button>
       <button @click="deleteContent" type="button" class="btn btn-danger">
@@ -36,14 +36,14 @@ export default {
     return {};
   },
   props: {
-    List_name: {
+    Content_name: {
       type: String,
       required: true,
     },
   },
   methods: {
-    closeModal: function () {
-      this.$emit("closeModal");
+    closeDeleteModal: function () {
+      this.$emit("closeDeleteModal");
     },
     deleteContent: function () {
       this.$emit("deleteContent");

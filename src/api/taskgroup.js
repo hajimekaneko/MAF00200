@@ -57,4 +57,17 @@ export default {
         });
     });
   },
+  deletetaskgroup: (token, TaskGroupID) => {
+    return new Promise((resolve, reject) => {
+      console.log(TaskGroupID);
+      client
+        .delete(`/taskmanagement/task_groups/${TaskGroupID}/`, {
+          headers: { "x-kbn-token": token },
+        })
+        .then((response) => resolve({ taskgroups: response.data }))
+        .catch((err) => {
+          reject(new Error(err.response.data.message || err.message));
+        });
+    });
+  },
 };

@@ -5,7 +5,7 @@
         :name="Task_name"
         :edit_content_flg="Task_edit_taskname_flg"
         :content_status="Task_status"
-        @deleteContent="deleteTask"
+        @deleteContent="openDeleteModal"
         @decompress="task_decompress(TaskGroup_index, Task_index)"
         @addContent="addContent(TaskGroup_index, Task_index)"
         @edit_content_name="edit_task_name(TaskGroup_index, Task_index)"
@@ -18,7 +18,9 @@
             :List_name="list.List_name"
             :List_Status="list.List_status"
             :List_Memo="list.List_memo"
-            :List_Index="index"
+            :List_index="index"
+            :Task_index="Task_index"
+            :TaskGroup_index="TaskGroup_index"
             @edit_list_name="edit_list_name(TaskGroup_index, Task_index, index)"
             @changeStatus="
               changeListStatus(
@@ -33,17 +35,25 @@
             @edited_list_name="
               edited_list_name($event, TaskGroup_index, Task_index, index, list)
             "
-            @deleteContent="deleteList(TaskGroup_index, Task_index, index)"
           />
         </li>
       </ul>
     </div>
+    <TMModalWindowsDelete
+      :Content_name="Task_name"
+      v-show="showDeleteModal"
+      @closeDeleteModal="closeDeleteModal"
+      @deleteContent="deleteTask(TaskGroup_index, Task_index)"
+    >
+    </TMModalWindowsDelete>
   </div>
 </template>
 
 <script>
 import TMMainTMP from "@/components/molecules/TMMainTMP.vue";
 import TMMainList from "@/components/molecules/TMMainList.vue";
+import TMModalWindowsDelete from "@/components/organisms/TMModalWindowsDelete.vue";
+
 // import _ from 'lodash'
 
 export default {
@@ -52,12 +62,18 @@ export default {
   components: {
     TMMainTMP,
     TMMainList,
+    TMModalWindowsDelete,
   },
   // data () {
   //   return {
   //     hoge: 'test'
   //   }
   // },
+  data() {
+    return {
+      showDeleteModal: false,
+    };
+  },
 
   props: {
     lists: {
@@ -89,28 +105,8 @@ export default {
       required: true,
     },
   },
-  created: function () {
-    // for(let i = 0; i < this.lists.length; i++){
-    //   var val = this.lists[i];
-    //   //チェック用データを足す
-    //   console.log("vm")
-    //   // if (typeof val.List_name != 'undefined' && typeof val.valueChecker == 'undefined'){
-    //   if (typeof val.List_name != 'undefined'){
-    //     this.$set(val, 'valueChecker', false);
-    //   }
-    //   console.log(val)
-    // }
-  },
-  // computed: {
-  //   List_name: {
-  //     get () {
-  //       return this.$store.state.obj.message
-  //     },
-  //     set (value) {
-  //       this.$store.commit('updateMessage', value)
-  //     }
-  //   }
-  // },
+  created: function () {},
+  computed: {},
   methods: {
     // `click`イベントを発行
     task_decompress() {
@@ -194,17 +190,15 @@ export default {
     changeTaskStatus(event) {
       this.$emit("changeTaskStatus", event);
     },
-    deleteList(TaskGroup_index, Task_index, List_index) {
-      console.log(TaskGroup_index, Task_index, List_index);
-      var listID;
-      listID =
-        this.$store.state.board.lists[TaskGroup_index].Task[Task_index].List[
-          List_index
-        ].ListId;
-      this.$store.dispatch("deletelist", listID);
+    closeDeleteModal: function () {
+      this.showDeleteModal = false;
+    },
+    openDeleteModal() {
+      // confirm('削除してよろしいですか?')
+      console.log("aaa");
+      this.showDeleteModal = true;
     },
     deleteTask(TaskGroup_index, Task_index) {
-      console.log(TaskGroup_index, Task_index);
       var TaskID;
       TaskID =
         this.$store.state.board.lists[TaskGroup_index].Task[Task_index].TaskId;
