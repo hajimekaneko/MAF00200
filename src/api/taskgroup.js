@@ -43,23 +43,35 @@ export default {
   },
   changestatus: (token, TaskGroupId, nextstatus, UserId) => {
     return new Promise((resolve, reject) => {
-      console.log({ TaskGroupId, nextstatus });
       client
         .patch(
           `/taskmanagement/task_groups/${TaskGroupId}/`,
-          { User: UserId, TaskGroup_status_No: nextstatus },
+          { User: UserId, TaskGroup_status: nextstatus },
           { headers: { "x-kbn-token": token } }
         )
         .then((response) => resolve({ lists: response.data }))
         .catch((err) => {
-          console.log("aaa");
+          reject(new Error(err.response.data.message || err.message));
+        });
+    });
+  },
+  changename: (token, TaskGroupID, newtaskgroupname) => {
+    return new Promise((resolve, reject) => {
+      console.log({ TaskGroupID, newtaskgroupname });
+      client
+        .patch(
+          `/taskmanagement/task_groups/${TaskGroupID}/`,
+          { TaskGroup_name: newtaskgroupname },
+          { headers: { "x-kbn-token": token } }
+        )
+        .then((response) => resolve({ taskgroups: response.data }))
+        .catch((err) => {
           reject(new Error(err.response.data.message || err.message));
         });
     });
   },
   deletetaskgroup: (token, TaskGroupID) => {
     return new Promise((resolve, reject) => {
-      console.log(TaskGroupID);
       client
         .delete(`/taskmanagement/task_groups/${TaskGroupID}/`, {
           headers: { "x-kbn-token": token },

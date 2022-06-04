@@ -9,10 +9,11 @@
         >
           <TMMainGroup
             :tasks="task_group.Task"
+            :TaskGroup="task_group"
             :TaskGroup_name="task_group.TaskGroup_name"
             :TaskGroup_show_task="task_group.TaskGroup_show_task"
             :TaskGroup_index="TaskGroup_index"
-            :TaskGroup_status="task_group.TaskGroup_status.TaskStatus_No"
+            :TaskGroup_status="task_group.TaskGroup_status"
             :TaskGroup_edit_taskgroupname_flg="
               task_group.TaskGroup_edit_taskgroupname_flg
             "
@@ -23,7 +24,7 @@
               changeTaskGroupStatus(
                 $event,
                 task_group.TaskGroupId,
-                task_group.TaskGroup_status.TaskStatus_No
+                task_group.TaskGroup_status
               )
             "
           />
@@ -69,7 +70,6 @@ export default {
       this.$emit("taskgroup_openDetail", TaskGroup_index);
     },
     changeTaskGroupStatus(event, TaskGroupId, TaskGroup_Status) {
-      console.log(event, TaskGroupId, TaskGroup_Status);
       var status;
       status = event.status;
       this.$store.dispatch("changetaskgroupstatus", {

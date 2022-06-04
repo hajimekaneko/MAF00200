@@ -9,6 +9,9 @@
         @decompress="task_decompress(TaskGroup_index, Task_index)"
         @addContent="addContent(TaskGroup_index, Task_index)"
         @edit_content_name="edit_task_name(TaskGroup_index, Task_index)"
+        @edited_content_name="
+          edited_task_name($event, TaskGroup_index, Task_index, Task)
+        "
         @changeStatus="changeTaskStatus($event)"
       />
       <ul v-show="Task_show_list" class="row">
@@ -104,6 +107,10 @@ export default {
       type: Number,
       required: true,
     },
+    Task: {
+      type: Object,
+      required: true,
+    },
   },
   created: function () {},
   computed: {},
@@ -140,6 +147,7 @@ export default {
           List_index
         ].ListId;
       if (newlistname === list.List_name) {
+        // LIST名が変更なし
         this.$store.dispatch("editedlistname", {
           TaskGroup_index,
           Task_index,
@@ -150,7 +158,24 @@ export default {
       }
     },
     edit_task_name(TaskGroup_index, Task_index) {
-      this.$store.dispatch("edittaskname", { TaskGroup_index, Task_index });
+      this.$store.dispatch("edittaskname", {
+        TaskGroup_index,
+        Task_index,
+      });
+    },
+    edited_task_name(newtaskname, TaskGroup_index, Task_index, Task) {
+      var taskID;
+      taskID =
+        this.$store.state.board.lists[TaskGroup_index].Task[Task_index].TaskId;
+      if (newtaskname === Task.Task_name) {
+        // TASK名が変更なし
+        this.$store.dispatch("editedtaskname", {
+          TaskGroup_index,
+          Task_index,
+        });
+      } else {
+        this.$store.dispatch("changetaskname", { taskID, newtaskname });
+      }
     },
     changeListStatus(
       event,
@@ -169,9 +194,7 @@ export default {
         this.$store.state.board.lists[TaskGroup_index].Task[Task_index].List[
           List_index
         ].List_memo;
-      console.log(memo, newmemo);
       if (newmemo === undefined || memo === newmemo) {
-        console.log(status, List_Id, List_Status);
         this.$store.dispatch("changeliststatus", {
           status,
           List_Id,
@@ -195,7 +218,6 @@ export default {
     },
     openDeleteModal() {
       // confirm('削除してよろしいですか?')
-      console.log("aaa");
       this.showDeleteModal = true;
     },
     deleteTask(TaskGroup_index, Task_index) {

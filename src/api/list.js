@@ -27,7 +27,6 @@ export default {
   },
   changestatus: (token, list_Id, nextstatus) => {
     return new Promise((resolve, reject) => {
-      console.log({ list_Id, nextstatus });
       client
         .patch(
           `/taskmanagement/lists/${list_Id}/`,

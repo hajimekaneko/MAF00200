@@ -35,6 +35,7 @@ export default {
       List_index
     ].List_name = newlistname;
   },
+
   [types.EDITTASKNAME](state, { TaskGroup_index, Task_index }) {
     state.board.lists[TaskGroup_index].Task[
       Task_index
@@ -45,11 +46,22 @@ export default {
       Task_index
     ].Task_edit_taskname_flg = false;
   },
+  [types.CHANGETASKNAME](state, { TaskGroup_index, Task_index, newtaskname }) {
+    state.board.lists[TaskGroup_index].Task[
+      Task_index
+    ].Task_edit_taskname_flg = false;
+    state.board.lists[TaskGroup_index].Task[Task_index].Task_name = newtaskname;
+  },
+
   [types.EDITTASKGROUPNAME](state, { TaskGroup_index }) {
     state.board.lists[TaskGroup_index].TaskGroup_edit_taskgroupname_flg = true;
   },
   [types.EDITEDTASKGROUPNAME](state, { TaskGroup_index }) {
     state.board.lists[TaskGroup_index].TaskGroup_edit_taskgroupname_flg = false;
+  },
+  [types.CHANGETASKGROUPNAME](state, { TaskGroup_index, newtaskgroupname }) {
+    state.board.lists[TaskGroup_index].TaskGroup_edit_taskgroupname_flg = false;
+    state.board.lists[TaskGroup_index].TaskGroup_name = newtaskgroupname;
   },
 
   [types.SHOWTASKS](state, TaskGroup_index) {

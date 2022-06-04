@@ -10,6 +10,9 @@
         @addContent="taskgroup_addTask"
         @openDetail="taskgroup_openDetail"
         @edit_content_name="edit_taskgroup_name(TaskGroup_index)"
+        @edited_content_name="
+          edited_taskgroup_name($event, TaskGroup_index, TaskGroup)
+        "
         @changeStatus="changeTaskGroupStatus($event)"
       />
 
@@ -21,6 +24,7 @@
         >
           <TMMainTask
             :lists="task.List"
+            :Task="task"
             :Task_name="task.Task_name"
             :Task_show_list="task.Task_show_list"
             :Task_index="Task_index"
@@ -66,7 +70,7 @@ export default {
 
   props: {
     tasks: {
-      type: Array,
+      type: Object,
       required: true,
     },
     TaskGroup_name: {
@@ -89,6 +93,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    TaskGroup: {
+      type: Object,
+      required: true,
+    },
   },
   methods: {
     // `click`イベントを発行
@@ -105,8 +113,23 @@ export default {
       this.$emit("taskgroup_openDetail");
     },
     edit_taskgroup_name(TaskGroup_index) {
-      console.log("edit_content_name");
-      this.$store.dispatch("edittaskgroupname", { TaskGroup_index });
+      this.$store.dispatch("edittaskgroupname", {
+        TaskGroup_index,
+      });
+    },
+    edited_taskgroup_name(newtaskgroupname, TaskGroup_index, TaskGroup) {
+      var taskgroupID;
+      taskgroupID = this.$store.state.board.lists[TaskGroup_index].TaskGroupId;
+      if (newtaskgroupname === TaskGroup.TaskGroup_name) {
+        this.$store.dispatch("editedtaskgroupname", {
+          TaskGroup_index,
+        });
+      } else {
+        this.$store.dispatch("changetaskgroupname", {
+          taskgroupID,
+          newtaskgroupname,
+        });
+      }
     },
     changeTaskStatus(event, TaskId, Task_Status) {
       var status;
@@ -124,7 +147,6 @@ export default {
       this.showDeleteModal = true;
     },
     deleteTaskGrouop(TaskGroup_index) {
-      console.log(TaskGroup_index);
       var TaskGroupID;
       TaskGroupID = this.$store.state.board.lists[TaskGroup_index].TaskGroupId;
       this.$store.dispatch("deletetaskgroup", TaskGroupID);

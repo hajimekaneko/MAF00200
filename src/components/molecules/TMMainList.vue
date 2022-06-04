@@ -50,14 +50,6 @@ export default {
     TMModalWindowsDelete,
     CMToInputFiled,
   },
-  directives: {
-    focus: {
-      // ディレクティブ定義
-      inserted: function (el) {
-        el.focus();
-      },
-    },
-  },
   props: {
     List_Status: {
       type: Number,

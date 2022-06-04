@@ -10,13 +10,12 @@
     </div>
     <input
       v-else
-      ref="input"
+      ref="content_input"
       type="text"
       class="form-control"
       :value="content_name"
       @keyup.enter="edited_content_name($event)"
       @blur="edited_content_name($event)"
-      v-focus
     />
   </div>
 </template>
@@ -26,14 +25,14 @@ export default {
   name: "CMToInputFiled",
 
   components: {},
-  directives: {
-    focus: {
-      // ディレクティブ定義
-      inserted: function (el) {
-        el.focus();
-      },
-    },
-  },
+  // directives: {
+  //   focus: {
+  //     // ディレクティブ定義
+  //     inserted: function (el) {
+  //       el.focus();
+  //     },
+  //   },
+  // },
   props: {
     content_name: {
       type: String,
@@ -52,6 +51,14 @@ export default {
   },
 
   computed: {},
+  // mounted: {},
+  watch: {
+    edit_content_flg: function (aa, bb) {
+      if (aa && !bb) {
+        this.$nextTick(() => this.$refs.content_input.focus());
+      }
+    },
+  },
 
   methods: {
     edit_content_name() {

@@ -38,7 +38,6 @@ export default {
   },
   changestatus: (token, Task_Id, nextstatus) => {
     return new Promise((resolve, reject) => {
-      console.log({ Task_Id, nextstatus });
       client
         .patch(
           `/taskmanagement/tasks/${Task_Id}/`,
@@ -51,9 +50,23 @@ export default {
         });
     });
   },
+  changename: (token, TaskID, newtaskname) => {
+    return new Promise((resolve, reject) => {
+      console.log({ TaskID, newtaskname });
+      client
+        .patch(
+          `/taskmanagement/tasks/${TaskID}/`,
+          { Task_name: newtaskname },
+          { headers: { "x-kbn-token": token } }
+        )
+        .then((response) => resolve({ tasks: response.data }))
+        .catch((err) => {
+          reject(new Error(err.response.data.message || err.message));
+        });
+    });
+  },
   deletetask: (token, TaskID) => {
     return new Promise((resolve, reject) => {
-      console.log(TaskID);
       client
         .delete(`/taskmanagement/tasks/${TaskID}/`, {
           headers: { "x-kbn-token": token },

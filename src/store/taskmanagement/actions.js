@@ -4,7 +4,6 @@ import { Auth, List, Task, TaskGroup } from "@/api";
 // import { Auth, Task } from '@/api'
 
 function changestatus(Content_Status, status) {
-  console.log(Content_Status, status);
   let nextstatus;
   if (status === 99) {
     if (Content_Status === 0 || Content_Status === 1) {
@@ -48,7 +47,6 @@ export default {
   //   });
   // },
   setsigninstate: ({ commit }, { user, idToken }) => {
-    console.log(user);
     return Auth.setsigninstate(idToken)
       .then(() => {
         // userじゃなくてバックエンドから持ってきたresponce.dataを使った方がええと思う
@@ -60,7 +58,6 @@ export default {
   },
 
   addtaskgroup: ({ dispatch, state }) => {
-    console.log(state.auth.uid);
     return TaskGroup.addtaskgroup(state.auth.uid, state.auth.uid)
       .then(() => {
         dispatch("fetchLists");
@@ -133,13 +130,11 @@ export default {
   ) => {
     let nextstatus;
     nextstatus = changestatus(TaskGroup_Status, status);
-    let UserId;
-    UserId = "";
     return TaskGroup.changestatus(
       state.auth.uid,
       TaskGroupId,
       nextstatus,
-      UserId
+      state.auth.uid
     )
       .then(() => {
         dispatch("fetchLists");
@@ -169,6 +164,27 @@ export default {
   },
   changelistname: ({ dispatch, state }, { listID, newlistname }) => {
     return List.changename(state.auth.uid, listID, newlistname)
+      .then(() => {
+        dispatch("fetchLists");
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+  changetaskname: ({ dispatch, state }, { taskID, newtaskname }) => {
+    return Task.changename(state.auth.uid, taskID, newtaskname)
+      .then(() => {
+        dispatch("fetchLists");
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+  changetaskgroupname: (
+    { dispatch, state },
+    { taskgroupID, newtaskgroupname }
+  ) => {
+    return TaskGroup.changename(state.auth.uid, taskgroupID, newtaskgroupname)
       .then(() => {
         dispatch("fetchLists");
       })
