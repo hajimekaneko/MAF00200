@@ -6,7 +6,7 @@
       {{ address }}
     </p>
   </div>
-  <h1>Kanban App Login</h1>
+  <h1>Kanban App Login2</h1>
   <!-- {{ process.env.VUE_APP_FIREBASE_AUTH_DOMAIN }} -->
 </template>
 
