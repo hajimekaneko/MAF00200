@@ -7,6 +7,7 @@
     </p>
   </div>
   <h1>Kanban App Login</h1>
+  <!-- {{ process.env.VUE_APP_FIREBASE_AUTH_DOMAIN }} -->
 </template>
 
 <script>
@@ -86,7 +87,8 @@ export default {
   },
   computed: {
     address: function () {
-      return this.$store.state.auth.email;
+      return process.env.VUE_APP_FIREBASE_AUTH_DOMAIN;
+      // return this.$store.state.auth.email;
       // return "this.$store.state.auth.email";
     },
   },
