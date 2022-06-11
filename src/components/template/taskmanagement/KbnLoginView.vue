@@ -52,7 +52,7 @@ export default {
           auth.currentUser
             .getIdToken(/* forceRefresh */ true)
             .then(function (idToken) {
-              console.log(idToken);
+              console.log(result);
               const user = result.user;
               data.email_address = user.email;
               // userじゃなくてバックエンドから持ってきた値を使った方がええと思う
@@ -87,9 +87,7 @@ export default {
   },
   computed: {
     address: function () {
-      return process.env.VUE_APP_FIREBASE_AUTH_DOMAIN;
-      // return this.$store.state.auth.email;
-      // return "this.$store.state.auth.email";
+      return this.$store.state.auth.email;
     },
   },
   // computed: {

@@ -4,22 +4,26 @@ import getters from "@/store/taskmanagement/getters";
 import mutations from "@/store/taskmanagement/mutations";
 import state from "@/store/taskmanagement/state";
 import createPersistedState from "vuex-persistedstate";
+import Cookies from "js-cookie";
 
 export default createStore({
-  // modules:{
-  //   taskmanagement: {
-  //     namespaced: false,
-  //     state, // 定義したstateを`state`オプションに指定
-  //     getters,
-  //     actions,
-  //     mutations,
-  //   }
-  // },
+  // plugins: [
+  //   createPersistedState({
+  //     key: "taskmanagement",
+  //     paths: ["auth"],
+  //     storage: window.sessionStorage,
+  //   }),
+  // ],
   plugins: [
     createPersistedState({
       key: "taskmanagement",
       paths: ["auth"],
-      storage: window.sessionStorage,
+      storage: {
+        getItem: (key) => Cookies.get(key),
+        setItem: (key, value) =>
+          Cookies.set(key, value, { expires: 7, secure: true }), //7日間有効
+        removeItem: (key) => Cookies.remove(key),
+      },
     }),
   ],
   state, // 定義したstateを`state`オプションに指定

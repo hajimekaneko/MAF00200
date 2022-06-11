@@ -10,7 +10,17 @@ export default {
         )
         .then((response) => console.log(response))
         .catch((err) => {
-          reject(new Error(err.response.data.message || err.message));
+          console.log(err.response.status);
+          if (err.response.status == "404") {
+            client.post("/main/signup/", idToken).then((response) =>
+              resolve({
+                email: response.data.email,
+                userId: response.data.userId,
+              })
+            );
+          } else {
+            reject(new Error(err.response.data.message || err.message));
+          }
         });
     });
   },

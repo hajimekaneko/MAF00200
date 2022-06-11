@@ -17,10 +17,7 @@ npm install --save vue-router
 npm install --save vuex
 ~~~~~~~~~~~~~~~~~~~~~~
 
-~~~~~~~~~~~~~~~~~~~~~~
-npm install --save lodash
-npm install --save stylus
-npm install --save stylus-loader
+npm install --save js-cookie
 
 
 ~~~~~~~~~~~~~~~~~~~~~~

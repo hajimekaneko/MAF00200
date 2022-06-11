@@ -31,7 +31,7 @@ export default {
           {
             User: UserId,
             TaskGroup_name: "newTaskGroup",
-            TaskGroup_status_No: 0,
+            TaskGroup_status: 0,
           },
           { headers: { "x-kbn-token": token } }
         )
